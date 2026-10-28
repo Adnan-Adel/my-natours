@@ -88,24 +88,27 @@ tourSchema.virtual('durationWeeks').get(function() {
     return this.duration / 7;
 });
 
-// DOCUMENT MIDDLEWARE: runs before .save() and .create()
-tourSchema.pre('save', function(next) {
-    this.slug = slugify(this.name, { lower: true });
-    next();
+tourSchema.virtual('durationWeeks').set(function(weeks) {
+    this.duration = weeks * 7;
 });
 
+// DOCUMENT MIDDLEWARE: runs before .save() and .create()
 // tourSchema.pre('save', function(next) {
-//   console.log('Will save document...');
-//   next();
+//     this.slug = slugify(this.name, { lower: true });
+//     next();
 // });
-
+//
+// tourSchema.pre('save', function(next) {
+//     console.log('Will save document...');
+//     next();
+// });
+//
 // tourSchema.post('save', function(doc, next) {
-//   console.log(doc);
-//   next();
+//     console.log(doc);
+//     next();
 // });
 
 // QUERY MIDDLEWARE
-// tourSchema.pre('find', function(next) {
 // tourSchema.pre(/^find/, function(next) {
 //     this.find({ secretTour: { $ne: true } });
 //
